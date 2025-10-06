@@ -5,15 +5,15 @@ date: "10/6/2025"
 format: gfm
 ---
 
-##Project Plan
+**Project Plan**
 
 **Introduction**: 
 The Korean music industry has grown and is amassing global attention like never before. The genre of popular Korean music has changed due to this global audience, but the language choice of lyrics has also notably shifted in recent years to include more and more English language. There are even many artists who release songs entirely in English in what seems to be an effort to reach an international audience and arguably to break into the hard-to-crack Western music industry. I am interested in seeing if artists who have been in the industry for a long time change their language (i.e. use more English and less Korean) as their popularity grows. 
 
 **Research Questions**
-- Does an artist adapt their language choice (Korean vs. English) depending on their rising popularity?  
-- Is popularity (album sales) correlated to language use (Korean vs. English lyrics)?
-- Does the place in the structure of a song have any correlation to which language is used? 
+- Does an artist adapt their language choice (Korean vs. English) depending on their rising popularity?   
+- Is popularity (album sales) correlated to language use (Korean vs. English lyrics)?  
+- Does the place in the structure of a song have any correlation to which language is used?   
 
 
 **The Data:**
