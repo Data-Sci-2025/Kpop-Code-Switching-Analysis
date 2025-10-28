@@ -1,0 +1,32 @@
+---
+format: gfm
+---
+
+##Reading in the Data
+
+```{r}
+#reading in packages I will probably use
+library(tidyverse)
+library(readr)
+
+#reading multiple files of data into R and combing them into one dataframe
+dfLyrics <-
+  list.files(path = "~/GitHub/Kpop-Code-Switching-Analysis", pattern = "*.csv") |>
+  map_df(~read_csv(.), header = FALSE)
+dfLyrics
+```
+
+##Cleaning up the Data
+
+
+
+
+
+
+Session Info
+```{r}
+sessionInfo()
+```
+
+
+
