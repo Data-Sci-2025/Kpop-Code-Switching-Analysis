@@ -2,7 +2,7 @@
 format: gfm
 ---
 
-##Reading in the Data
+## Reading in the Data
 
 ```{r}
 #reading in packages I will probably use
@@ -16,7 +16,7 @@ dfLyrics <-
 dfLyrics
 ```
 
-##Cleaning up the Data
+## Cleaning up the Data
 
 
 
