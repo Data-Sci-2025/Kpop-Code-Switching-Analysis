@@ -2,16 +2,17 @@
 format: gfm
 ---
 
-#Project Progress Reports
-##Nicole Giles
+# Project Progress Reports 
 
-###Entry 1: October 7th, 2025
+## Nicole Giles  
+
+### Entry 1: October 7th, 2025
 
 I have refined my research questions and widened my data pool to include all of the songs on the four albums I chose to analyze. This will make for a hopefully more rich data pool and just generally provide more to look at. I also found some packages I can try out to help me identify the Korean versus English words in the lyrics;  __textcat__ package or the __cldr__ package. I am not sure which works best for my purposes but plan to look into the exact functions on each as I start the actual coding process.
 
 I set up the repository and provided a more detailed plan of my project. I only really had one idea for a project, so I didn't have to spend time on choosing a direction. The 'license' and 'read me' files are established and can be added to later. 
 
-###Progress Report 1
+### Progress Report 1
 
 I have managed to compile all of the lyrics for each song onto its own sheets which were then downloaded as separate csv files. I read all of these csv files into R using tidyverse functions. These csv files were then compiled into a bigger dataframe so that I can hopefully view data all in one place. 
 
