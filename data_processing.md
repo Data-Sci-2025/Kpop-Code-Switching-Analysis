@@ -22,168 +22,168 @@ library(readr)
 
 #reading multiple files of data into R and combing them into one dataframe
 dfLyrics <-
-  list.files(path = "~/GitHub/Kpop-Code-Switching-Analysis", pattern = "*.csv") |>
-  map_df(~read_csv(.), header = FALSE)
+  list.files(path = ".", pattern = "*.csv") |>
+  map_df(\(x) read_csv(x, col_names = FALSE))
 ```
 
-    Rows: 90 Columns: 1
+    Rows: 91 Columns: 1
     ── Column specification ────────────────────────────────────────────────────────
     Delimiter: ","
-    chr (1): 아 예, 아 예 근데 뭐라구요?
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 62 Columns: 1
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (1): 4월쯤의 소나기는
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 22 Columns: 1
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (1): 우리 사탕 같은 사랑해요
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 36 Columns: 1
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (1): ‘싫어’ 하면 싫어지면 좋겠어
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 53 Columns: 1
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (1): Eyes on you, Eyes on me
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 52 Columns: 1
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (1): 이런 빌어먹을 세상
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 98 Columns: 1
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (1): Eh oh eh oh
+    chr (1): X1
 
     ℹ Use `spec()` to retrieve the full column specification for this data.
     ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
     Rows: 63 Columns: 1
     ── Column specification ────────────────────────────────────────────────────────
     Delimiter: ","
-    chr (1): 조심해 손 델라
+    chr (1): X1
+
+    ℹ Use `spec()` to retrieve the full column specification for this data.
+    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    Rows: 23 Columns: 1
+    ── Column specification ────────────────────────────────────────────────────────
+    Delimiter: ","
+    chr (1): X1
+
+    ℹ Use `spec()` to retrieve the full column specification for this data.
+    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    Rows: 37 Columns: 1
+    ── Column specification ────────────────────────────────────────────────────────
+    Delimiter: ","
+    chr (1): X1
+
+    ℹ Use `spec()` to retrieve the full column specification for this data.
+    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    Rows: 54 Columns: 1
+    ── Column specification ────────────────────────────────────────────────────────
+    Delimiter: ","
+    chr (1): X1
+
+    ℹ Use `spec()` to retrieve the full column specification for this data.
+    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    Rows: 53 Columns: 1
+    ── Column specification ────────────────────────────────────────────────────────
+    Delimiter: ","
+    chr (1): X1
+
+    ℹ Use `spec()` to retrieve the full column specification for this data.
+    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    Rows: 99 Columns: 1
+    ── Column specification ────────────────────────────────────────────────────────
+    Delimiter: ","
+    chr (1): X1
 
     ℹ Use `spec()` to retrieve the full column specification for this data.
     ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
     Rows: 64 Columns: 1
     ── Column specification ────────────────────────────────────────────────────────
     Delimiter: ","
-    chr (1): When I Saw you 멈춰버린 공간 예민해진 감각
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 59 Columns: 1
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (1): 가끔씩 네 생각 나서
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 74 Columns: 1
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (1): Play with me
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 69 Columns: 1
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (1): 맘속엔 어린아이가 있어
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 57 Columns: 1
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (1): Yeh 발맞춰 어디론가 Run away
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 49 Columns: 1
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (1): I can’t explain 얼어 버린 내 마음을 (Wuh-)
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 98 Columns: 1
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (1): Slip into the diamond life oh!
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 74 Columns: 1
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (1): 오랜만에 만나는 친구들은 줄어들고
+    chr (1): X1
 
     ℹ Use `spec()` to retrieve the full column specification for this data.
     ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
     Rows: 65 Columns: 1
     ── Column specification ────────────────────────────────────────────────────────
     Delimiter: ","
-    chr (1): 아직도 하루 온종일 지루하기 만한 Morning
+    chr (1): X1
 
     ℹ Use `spec()` to retrieve the full column specification for this data.
     ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 65 Columns: 1
+    Rows: 60 Columns: 1
     ── Column specification ────────────────────────────────────────────────────────
     Delimiter: ","
-    chr (1): I stand on oceans
+    chr (1): X1
 
     ℹ Use `spec()` to retrieve the full column specification for this data.
     ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 61 Columns: 1
+    Rows: 75 Columns: 1
     ── Column specification ────────────────────────────────────────────────────────
     Delimiter: ","
-    chr (1): Ayo ayo
+    chr (1): X1
 
     ℹ Use `spec()` to retrieve the full column specification for this data.
     ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 127 Columns: 1
+    Rows: 70 Columns: 1
     ── Column specification ────────────────────────────────────────────────────────
     Delimiter: ","
-    chr (1): 하나 둘 셋 넷
+    chr (1): X1
 
     ℹ Use `spec()` to retrieve the full column specification for this data.
     ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 80 Columns: 1
+    Rows: 58 Columns: 1
     ── Column specification ────────────────────────────────────────────────────────
     Delimiter: ","
-    chr (1): We the best music
+    chr (1): X1
 
     ℹ Use `spec()` to retrieve the full column specification for this data.
     ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 57 Columns: 1
+    Rows: 50 Columns: 1
     ── Column specification ────────────────────────────────────────────────────────
     Delimiter: ","
-    chr (1): When I first met you
+    chr (1): X1
 
     ℹ Use `spec()` to retrieve the full column specification for this data.
     ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-    Rows: 84 Columns: 1
+    Rows: 99 Columns: 1
     ── Column specification ────────────────────────────────────────────────────────
     Delimiter: ","
-    chr (1): SEVENTEEN right here
+    chr (1): X1
+
+    ℹ Use `spec()` to retrieve the full column specification for this data.
+    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    Rows: 75 Columns: 1
+    ── Column specification ────────────────────────────────────────────────────────
+    Delimiter: ","
+    chr (1): X1
+
+    ℹ Use `spec()` to retrieve the full column specification for this data.
+    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    Rows: 66 Columns: 1
+    ── Column specification ────────────────────────────────────────────────────────
+    Delimiter: ","
+    chr (1): X1
+
+    ℹ Use `spec()` to retrieve the full column specification for this data.
+    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    Rows: 66 Columns: 1
+    ── Column specification ────────────────────────────────────────────────────────
+    Delimiter: ","
+    chr (1): X1
+
+    ℹ Use `spec()` to retrieve the full column specification for this data.
+    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    Rows: 62 Columns: 1
+    ── Column specification ────────────────────────────────────────────────────────
+    Delimiter: ","
+    chr (1): X1
+
+    ℹ Use `spec()` to retrieve the full column specification for this data.
+    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    Rows: 128 Columns: 1
+    ── Column specification ────────────────────────────────────────────────────────
+    Delimiter: ","
+    chr (1): X1
+
+    ℹ Use `spec()` to retrieve the full column specification for this data.
+    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    Rows: 81 Columns: 1
+    ── Column specification ────────────────────────────────────────────────────────
+    Delimiter: ","
+    chr (1): X1
+
+    ℹ Use `spec()` to retrieve the full column specification for this data.
+    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    Rows: 58 Columns: 1
+    ── Column specification ────────────────────────────────────────────────────────
+    Delimiter: ","
+    chr (1): X1
+
+    ℹ Use `spec()` to retrieve the full column specification for this data.
+    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    Rows: 85 Columns: 1
+    ── Column specification ────────────────────────────────────────────────────────
+    Delimiter: ","
+    chr (1): X1
 
     ℹ Use `spec()` to retrieve the full column specification for this data.
     ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
@@ -192,26 +192,20 @@ dfLyrics <-
 dfLyrics
 ```
 
-    # A tibble: 1,559 × 23
-       `아 예, 아 예 근데 뭐라구요?`       `4월쯤의 소나기는` 우리 사탕 같은 사랑해요…¹…
-       <chr>                               <chr>              <chr>                 
-     1 Yo $. Coup$, Here’s the baton, Man  <NA>               <NA>                  
-     2 등장과 동시에 들러리들 바닥에서     <NA>               <NA>                  
-     3 침 흘리며 기절 그 위에서 수영해요   <NA>               <NA>                  
-     4 WOAH 옆구리 지방튜브 끼고 못 뜬     <NA>               <NA>                  
-     5 애들이 알리 있나                    <NA>               <NA>                  
-     6 못 뜬 이유 절대 모름 (Don’t know)   <NA>               <NA>                  
-     7 맞출 생각 없어                      <NA>               <NA>                  
-     8 니 식견에 날 맞추지 말길            <NA>               <NA>                  
-     9 막 귀들 방구석 박혀 밖에 나오질 않지…… <NA>               <NA>                  
-    10 그딴 식으로 평생우리 뒤 일팔 (일칠) <NA>               <NA>                  
-    # ℹ 1,549 more rows
-    # ℹ abbreviated name: ¹​`우리 사탕 같은 사랑해요`
-    # ℹ 20 more variables: `‘싫어’ 하면 싫어지면 좋겠어` <chr>,
-    #   `Eyes on you, Eyes on me` <chr>, `이런 빌어먹을 세상` <chr>,
-    #   `Eh oh eh oh` <chr>, `조심해 손 델라` <chr>,
-    #   `When I Saw you 멈춰버린 공간 예민해진 감각` <chr>,
-    #   `가끔씩 네 생각 나서` <chr>, `Play with me` <chr>, …
+    # A tibble: 1,582 × 1
+       X1                                  
+       <chr>                               
+     1 아 예, 아 예 근데 뭐라구요?         
+     2 Yo $. Coup$, Here’s the baton, Man  
+     3 등장과 동시에 들러리들 바닥에서     
+     4 침 흘리며 기절 그 위에서 수영해요   
+     5 WOAH 옆구리 지방튜브 끼고 못 뜬     
+     6 애들이 알리 있나                    
+     7 못 뜬 이유 절대 모름 (Don’t know)   
+     8 맞출 생각 없어                      
+     9 니 식견에 날 맞추지 말길            
+    10 막 귀들 방구석 박혀 밖에 나오질 않지
+    # ℹ 1,572 more rows
 
 ## Cleaning up the Data
 

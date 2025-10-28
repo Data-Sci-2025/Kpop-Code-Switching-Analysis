@@ -11,8 +11,8 @@ library(readr)
 
 #reading multiple files of data into R and combing them into one dataframe
 dfLyrics <-
-  list.files(path = "~/GitHub/Kpop-Code-Switching-Analysis", pattern = "*.csv") |>
-  map_df(~read_csv(.), header = FALSE)
+  list.files(path = ".", pattern = "*.csv") |>
+  map_df(\(x) read_csv(x, col_names = FALSE))
 dfLyrics
 ```
 
