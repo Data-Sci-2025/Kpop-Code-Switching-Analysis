@@ -12,8 +12,11 @@ library(readr)
 #reading multiple files of data into R and combing them into one dataframe
 dfLyrics <-
   list.files(path = ".", pattern = "*.csv") |>
-  map_df(\(x) read_csv(x, col_names = FALSE))
-dfLyrics
+  map_df(\(x) read_csv(x, header = TRUE))
+         
+         
+         
+print(dfLyrics)
 ```
 
 ## Cleaning up the Data
