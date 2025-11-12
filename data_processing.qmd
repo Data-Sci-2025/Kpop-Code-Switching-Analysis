@@ -19,9 +19,13 @@ lyrics <- list.files(pattern=".csv") |>
 # Putting each song's metadata in separate columns
 lyrics$track_type = str_extract(lyrics$file, "Title|Nontitle")
 lyrics$album_year = str_extract(lyrics$file, "15|20|23|24")
-lyrics$song_title = str_extract(lyrics$file, "[Title|Nontitle|15|20|23|24]")
+# Can't quite get the song title to work right now
+#lyrics$song_title = str_extract(lyrics$file, "!Title|!Nontitle|!15|!20|!23|!24+[a-z]")
 lyrics
 
+# Trying to rename file column:
+#janitor::clean_names() |> rename(lyrics, song_title = "file")
+#lyrics
 ```
 
 ## Cleaning up the Data
