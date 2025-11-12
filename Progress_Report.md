@@ -22,3 +22,20 @@ The combined dataframe is really messed up currently. I need to fix it so that t
 
 
 
+### Progress Report 2
+
+I have not finished compiling my data and am not ready for analysis in time for this report. 
+
+Here is what I have accomplished since the last check in:
+- I have attempted to use web-scraping as a way to obtain the data, but found that the most I could manage was a list of links that led to each individual webpage for each song I wanted to analyze. Some of the code was created using our textbook as a reference, but some was created with the help of AI (ChatGPT). Since I don't have permalinks to my chat with the system and do not remember how much of my limited progress was from which aid. Thus, this attempt at wrangling/organizing the data was abandoned. 
+
+-I went back to my (many) csv files that I organized from the information provided on colorcodedlyrics.com and read them all into R using read_csv(). I can't get the files to open and show everything inside because my code can only produce a list, not a vector. 
+
+Here is what I hope to accomplish by the next report:
+- I want to have my data actually visible and tidied.
+
+
+
+
+
+
