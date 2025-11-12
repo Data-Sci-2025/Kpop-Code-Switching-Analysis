@@ -7,42 +7,18 @@ format: gfm
 ```{r}
 #reading in packages I will need
 library(tidyverse)
+library(dplyr)
+library(stringr)
 
-#reading multiple files of data into R and combing them into one list (I can't seem to make a dataframe plz send help)
+#reading multiple files of data into R
+lyrics <- list.files(pattern=".csv") |>
+  read_csv(id = "file")
 
-dfLyrics <- c("Nontitle_Shining_Diamond_15.csv", "Title_Adore_U_15.csv", "Nontitle_Twenty_15.csv", "Nontitle_Ah_Yeah_15.csv",
-"Nontitle_Jam_Jam_15.csv",
-"Nontitle_Fearless_20.csv",
-"Nontitle_Fire_23.csv",
-"Nontitle_Candy_24.csv",
-"Nontitle_Dust_23.csv",
-"Nontitle_Eyes_On_You_24.csv",
-"Nontitle_F_ck_My_Life_23.csv",
-"Nontitle_Fire_23.csv",
-"Nontitle_April_shower_23.csv",
-"Nontitle_I_Dont_Understand_But_I_Luv_U_23.csv",
-"Nontitle_I_Wish_20.csv",
-"Nontitle_Kidult_20.csv",
-"Nontitle_My_My_20.csv",
-"Nontitle_Rain_24.csv",
-"Nontitle_Together_20.csv",
-"Nontitle_Water_24.csv",
-"Title_Left_and_Right_20.csv",
-"Title_Love_Money_Fame_24.csv",
-"Title_One_to_Thirteen_24.csv",
-"Title_Super_23.csv")
-
-
-
-# The code below this doesn't work.
-#long_Lyrics <- list_rbind(dfLyrics, names_to = "lyrics")          
-
-#dfLyrics |> 
- # pivot_longer(
-  #  cols = starts_with("Title"| "Nontitle"), 
-   # names_to = "Song Name", 
-    #values_to = "Lyrics")
-
+# Putting each song's metadata in separate columns
+lyrics$track_type = str_extract(lyrics$file, "Title|Nontitle")
+lyrics$album_year = str_extract(lyrics$file, "15|20|23|24")
+lyrics$song_title = str_extract(lyrics$file, "[Title|Nontitle|15|20|23|24]")
+lyrics
 
 ```
 
