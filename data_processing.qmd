@@ -35,15 +35,13 @@ dfLyrics <- c("Nontitle_Shining_Diamond_15.csv", "Title_Adore_U_15.csv", "Nontit
 
 
 # The code below this doesn't work.
-long_Lyrics <- list_rbind(dfLyrics, names_to = "lyrics")          
+#long_Lyrics <- list_rbind(dfLyrics, names_to = "lyrics")          
 
-?map_df()
-
-dfLyrics |> 
-  pivot_longer(
-    cols = starts_with("Title"| "Nontitle"), 
-    names_to = "Song Name", 
-    values_to = "Lyrics")
+#dfLyrics |> 
+ # pivot_longer(
+  #  cols = starts_with("Title"| "Nontitle"), 
+   # names_to = "Song Name", 
+    #values_to = "Lyrics")
 
 
 ```
