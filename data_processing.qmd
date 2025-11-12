@@ -4,6 +4,8 @@ format: gfm
 
 ## Reading in the Data
 
+The code below shows the code I used to read in the data, where each song is its own csv file. I then created columns for the metadata associated with each song. 
+
 ```{r}
 #reading in packages I will need
 library(tidyverse)
@@ -24,7 +26,12 @@ lyrics
 
 ## Cleaning up the Data
 
-One day I will have data to clean. Please slack me if you can help me. 
+I will pivot data to be longer. Then, I will use functions from tidy text to make it so that each word is its own row.
+
+
+## Analyzing the Data
+
+I will use language-detecting functions to label the individual words as English, Korean, or Other. 
 
 Session Info
 ```{r}
