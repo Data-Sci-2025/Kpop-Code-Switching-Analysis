@@ -11,6 +11,7 @@ The code below shows the code I used to read in the data, where each song is its
 library(tidyverse)
 library(dplyr)
 library(stringr)
+library(tidytext)
 
 #reading multiple files of data into R
 lyrics <- list.files(pattern=".csv") |>
@@ -18,19 +19,27 @@ lyrics <- list.files(pattern=".csv") |>
 
 # Putting each song's metadata in separate columns
 lyrics$track_type = str_extract(lyrics$file, "Title|Nontitle")
-lyrics$album_year = str_extract(lyrics$file, "15|20|23|24")
+lyrics$album_year_20XX = str_extract(lyrics$file, "15|20|23|24")
 # Can't quite get the song title to work right now
-#lyrics$song_title = str_extract(lyrics$file, "!Title|!Nontitle|!15|!20|!23|!24+[a-z]")
 lyrics
 
-# Trying to rename file column:
-#janitor::clean_names() |> rename(lyrics, song_title = "file")
-#lyrics
 ```
 
 ## Cleaning up the Data
 
 I will pivot data to be longer. Then, I will use functions from tidy text to make it so that each word is its own row.
+
+```{r}
+
+lyrics |>
+ unnest_tokens(word, "Lyrics") |> arrange(desc(album_year_20XX))
+
+#word |> list(lyrics$"word") 
+# detect_language_mixed(word)
+
+
+```
+
 
 
 ## Analyzing the Data
