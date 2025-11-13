@@ -21,6 +21,7 @@ lyrics <- list.files(pattern=".csv") |>
 lyrics$track_type = str_extract(lyrics$file, "Title|Nontitle")
 lyrics$album_year_20XX = str_extract(lyrics$file, "15|20|23|24")
 # Can't quite get the song title to work right now
+#lyrics$song_title = str_extract(lyrics$file, "")
 lyrics
 
 ```
