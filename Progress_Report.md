@@ -49,7 +49,7 @@ My immediate next steps include:
 - Finally analyzing the data I've tidied so that I can understand the ratio of Korean to English lyrics over all four albums as well as per album. My goal is to see whether there is an increase in the use of English over time, i.e. after clear success with the album from 2023. 
 - I hope to also be able to say something about what kind of language is used in English instead of Korean (though this may have to more of a qualitative step instead of a quantitative one at this point). 
 
-OVerall, I know that I am not reaching the goals of each progress report as they are due. However, I find confidence in the fact that I am still reaching the intended goals later (which is better than never). My skills as a linguist are stronger than my skills as a programmer/data scientist, and can carry overall analysis of the data I belatedly tidied up.  
+Overall, I know that I am not reaching the goals of each progress report as they are due. However, I find confidence in the fact that I am still reaching the intended goals later (which is better than never). My skills as a linguist are stronger than my skills as a programmer/data scientist, and can carry overall analysis of the data I belatedly tidied up.  
 
 
 
