@@ -35,6 +35,22 @@ Here is what I hope to accomplish by the next report:
 - I want to have my data actually visible and tidied.
 
 
+### Progress Report 3
+
+I have still not finished organizing my data, but here is what I accomplished since the last check-in:  
+- I abandoned the attempt at web-scraping after discovering it would not be necessary for this project. 
+- I managed to successfully create columns for all of the metadata that was contained in the csv file names of the songs I am analyzing.
+- I put the lyrics of the songs into one long list and used tidytext to put each word in its own column, really putting the data in its longest form. From there I was able to detect the language of each word using stringr. Right now, the question which language each word is is in columns called "English" and "Korean" with TRUE or FALSE statements in each row. 
+- I fixed my license file to more accurately match my intentions with this project's further use. 
+
+My working code is in the Quarto document titled 'data_processing'. This document has been added to and edited as I progressed in tidying my data. 
+
+My immediate next steps include:  
+- Finally analyzing the data I've tidied so that I can understand the ratio of Korean to English lyrics over all four albums as well as per album. My goal is to see whether there is an increase in the use of English over time, i.e. after clear success with the album from 2023. 
+- I hope to also be able to say something about what kind of language is used in English instead of Korean (though this may have to more of a qualitative step instead of a quantitative one at this point). 
+
+OVerall, I know that I am not reaching the goals of each progress report as they are due. However, I find confidence in the fact that I am still reaching the intended goals later (which is better than never). My skills as a linguist are stronger than my skills as a programmer/data scientist, and can carry overall analysis of the data I belatedly tidied up.  
+
 
 
 

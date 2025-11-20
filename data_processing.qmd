@@ -12,6 +12,7 @@ library(tidyverse)
 library(dplyr)
 library(stringr)
 library(tidytext)
+ library(stringr)
 
 #reading multiple files of data into R
 lyrics <- list.files(pattern=".csv") |>
@@ -28,16 +29,28 @@ lyrics
 
 ## Cleaning up the Data
 
-I will pivot data to be longer. Then, I will use functions from tidy text to make it so that each word is its own row.
+I used functions from tidy text to make it so that each word is its own row.
 
 ```{r}
 
 lyrics |>
- unnest_tokens(word, "Lyrics") |> arrange(desc(album_year_20XX))
+ unnest_tokens(word, "Lyrics") |> arrange(desc(album_year_20XX)) -> withlang
+print(withlang)
 
-#word |> list(lyrics$"word") 
-# detect_language_mixed(word)
+#creating vector with only the lyrics in single-word rows
+select(withlang, "word") -> withlang
+print(withlang)
 
+
+#mutating withlang to detect language of rows of lyrics
+withlang <- withlang %>%
+  mutate(
+    word   = as.character(word),
+    korean  = str_detect(word, "[가-힣]"),
+    english = str_detect(word, "[A-Za-z]")
+  )
+
+print(withlang)
 
 ```
 
@@ -46,6 +59,18 @@ lyrics |>
 ## Analyzing the Data
 
 I will use language-detecting functions to label the individual words as English, Korean, or Other. 
+
+
+```{r}
+
+
+
+```
+
+
+
+
+
 
 Session Info
 ```{r}
