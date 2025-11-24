@@ -12,54 +12,77 @@ library(tidyverse)
 library(dplyr)
 library(stringr)
 library(tidytext)
- library(stringr)
 
-#reading multiple files of data into R
-lyrics <- list.files(pattern=".csv") |>
-  read_csv(id = "file")
+#reading multiple files of data into R and replacing NA's to present as true NA's
+firstfiles <- list.files(pattern=".csv") |>
+  read_csv(id = "file", na = c("", "na", "n/a", "N/A", "NA", "Na"))
 
 # Putting each song's metadata in separate columns
-lyrics$track_type = str_extract(lyrics$file, "Title|Nontitle")
-lyrics$album_year_20XX = str_extract(lyrics$file, "15|20|23|24")
-# Can't quite get the song title to work right now
-#lyrics$song_title = str_extract(lyrics$file, "")
-lyrics
+firstfiles$track_type = str_extract(firstfiles$file, "Title|Nontitle")
+firstfiles$album_year_20XX = str_extract(firstfiles$file, "15|20|23|24")
+
+#separating out song name using stringr function + mutate:
+lyrics = firstfiles |>
+  mutate(
+    file = as.character(file),
+  song_title = case_when(
+    str_detect(file, "Nontitle_Ah_Yeah_15.csv") ~ "Ah Yeah",
+    str_detect(file, "Nontitle_April_shower_23.csv") ~ "April Shower",
+    str_detect(file, "Nontitle_Candy_24.csv") ~ "Candy",
+    str_detect(file, "Nontitle_Dust_23.csv") ~ "Dust",
+    str_detect(file, "Nontitle_Eyes_On_You_24.csv") ~ "Eyes On You",
+    str_detect(file, "Nontitle_F_ck_My_Life_23.csv") ~ "F_ck My Life",
+    str_detect(file, "Nontitle_Fearless_20.csv") ~ "Fearless",
+    str_detect(file, "Nontitle_Fire_23.csv") ~ "Fire",
+    str_detect(file, "Nontitle_I_Dont_Understand_But_I_Luv_U_23.csv") ~ "I Don't Understand But I Luv U",
+    str_detect(file, "Nontitle_I_Wish_20.csv") ~ "I Wish",
+    str_detect(file, "Nontitle_Jam_Jam_15.csv") ~ "Jam Jam",
+    str_detect(file, "Nontitle_Kidult_20.csv") ~ "Kidult",
+    str_detect(file, "Nontitle_My_My_20.csv") ~ "My My",
+    str_detect(file, "Nontitle_Rain_24.csv") ~ "Rain",
+    str_detect(file, "Nontitle_Shining_Diamond_15.csv") ~ "Shining Diamond",
+    str_detect(file, "Nontitle_Together_20.csv") ~ "Together",
+    str_detect(file, "Nontitle_Twenty_15.csv") ~ "Twenty",
+    str_detect(file, "Nontitle_Water_24.csv") ~ "Water",
+    str_detect(file, "Title_Adore_U_15.csv") ~ "Adore U",
+    str_detect(file, "Title_Left_and_Right_20.csv") ~ "Left and Right",
+    str_detect(file, "Title_Love_Money_Fame_24.csv") ~ "Love Money Fame",
+    str_detect(file, "Title_One_to_Thirteen_24.csv") ~ "One to Thirteen",
+    str_detect(file, "Title_Super_23.csv") ~ "Super")) ->> lyrics
+
+print(lyrics)
+    
 
 ```
 
 ## Cleaning up the Data
 
-I used functions from tidy text to make it so that each word is its own row.
+I used functions from tidy text to make it so that each word is its own row. I used stringr functions to detect Hangul use versus Latin alphabet use, which divided the individual words of the lyrics by language. 
+
 
 ```{r}
-
-lyrics |>
- unnest_tokens(word, "Lyrics") |> arrange(desc(album_year_20XX)) -> withlang
-print(withlang)
-
-#creating vector with only the lyrics in single-word rows
-select(withlang, "word") -> withlang
-print(withlang)
+#putting each word of the lyrics as its own row and feeding it back into the dataframe
+lyrics |> 
+  unnest_tokens(word, "Lyrics") |> arrange(desc(album_year_20XX)) -> lyrics
+print(lyrics)
 
 
-#mutating withlang to detect language of rows of lyrics
-withlang <- withlang %>%
+#mutating dataframe to detect language of rows of lyrics and create language column
+lyricdf <- lyrics |>
   mutate(
     word   = as.character(word),
-    korean  = str_detect(word, "[가-힣]"),
-    english = str_detect(word, "[A-Za-z]")
-  )
-
-print(withlang)
+  language = case_when(
+  str_detect(word, "[가-힣]") ~ "Korean",
+  str_detect(word, "[a-zA-z 12345]") ~ "English"
+)) ->> lyricsdf
+  
+  print(lyricsdf)
 
 ```
 
 
 
 ## Analyzing the Data
-
-I will use language-detecting functions to label the individual words as English, Korean, or Other. 
-
 
 ```{r}
 
