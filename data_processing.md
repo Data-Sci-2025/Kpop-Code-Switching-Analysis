@@ -42,8 +42,8 @@ firstfiles <- list.files(pattern=".csv") |>
 ``` r
 # Putting each song's metadata in separate columns
 firstfiles$track_type = str_extract(firstfiles$file, "Title|Nontitle")
-firstfiles$album_year_20XX = str_extract(firstfiles$file, "15|20|23|24")
-
+firstfiles$album_year = str_extract(firstfiles$file, "15|20|23|24")
+ colnames(firstfiles) <- tolower(colnames(firstfiles))
 #separating out song name using stringr function + mutate:
 lyrics = firstfiles |>
   mutate(
@@ -71,24 +71,30 @@ lyrics = firstfiles |>
     str_detect(file, "Title_Left_and_Right_20.csv") ~ "Left and Right",
     str_detect(file, "Title_Love_Money_Fame_24.csv") ~ "Love Money Fame",
     str_detect(file, "Title_One_to_Thirteen_24.csv") ~ "One to Thirteen",
-    str_detect(file, "Title_Super_23.csv") ~ "Super")) ->> lyrics
+    str_detect(file, "Title_Super_23.csv") ~ "Super"),
+  album_year = case_when(
+    str_detect(album_year, "24") ~ "2024",
+    str_detect(album_year, "23") ~ "2023",
+    str_detect(album_year, "20") ~ "2020",
+    str_detect(album_year, "15") ~ "2015")
+  ) ->> lyrics
 
 print(lyrics)
 ```
 
     # A tibble: 1,582 × 5
-       file                    Lyrics          track_type album_year_20XX song_title
-       <chr>                   <chr>           <chr>      <chr>           <chr>     
-     1 Nontitle_Ah_Yeah_15.csv 아 예 아 예 근데 뭐라구… Nontitle   15              Ah Yeah   
-     2 Nontitle_Ah_Yeah_15.csv Yo $. Coup$, H… Nontitle   15              Ah Yeah   
-     3 Nontitle_Ah_Yeah_15.csv 등장과 동시에 들러리들 바… Nontitle   15              Ah Yeah   
-     4 Nontitle_Ah_Yeah_15.csv 침 흘리며 기절 그 위에서… Nontitle   15              Ah Yeah   
-     5 Nontitle_Ah_Yeah_15.csv WOAH 옆구리 지방튜브 … Nontitle   15              Ah Yeah   
-     6 Nontitle_Ah_Yeah_15.csv 애들이 알리 있나…… Nontitle   15              Ah Yeah   
-     7 Nontitle_Ah_Yeah_15.csv 못 뜬 이유 절대 모름 (… Nontitle   15              Ah Yeah   
-     8 Nontitle_Ah_Yeah_15.csv 맞출 생각 없어  Nontitle   15              Ah Yeah   
-     9 Nontitle_Ah_Yeah_15.csv 니 식견에 날 맞추지 말길… Nontitle   15              Ah Yeah   
-    10 Nontitle_Ah_Yeah_15.csv 막 귀들 방구석 박혀 밖에… Nontitle   15              Ah Yeah   
+       file                    lyrics               track_type album_year song_title
+       <chr>                   <chr>                <chr>      <chr>      <chr>     
+     1 Nontitle_Ah_Yeah_15.csv 아 예 아 예 근데 뭐라구요?…… Nontitle   2015       Ah Yeah   
+     2 Nontitle_Ah_Yeah_15.csv Yo $. Coup$, Here’s… Nontitle   2015       Ah Yeah   
+     3 Nontitle_Ah_Yeah_15.csv 등장과 동시에 들러리들 바닥에서…… Nontitle   2015       Ah Yeah   
+     4 Nontitle_Ah_Yeah_15.csv 침 흘리며 기절 그 위에서 수영해요… Nontitle   2015       Ah Yeah   
+     5 Nontitle_Ah_Yeah_15.csv WOAH 옆구리 지방튜브 끼고 못 … Nontitle   2015       Ah Yeah   
+     6 Nontitle_Ah_Yeah_15.csv 애들이 알리 있나     Nontitle   2015       Ah Yeah   
+     7 Nontitle_Ah_Yeah_15.csv 못 뜬 이유 절대 모름 (Don’t… Nontitle   2015       Ah Yeah   
+     8 Nontitle_Ah_Yeah_15.csv 맞출 생각 없어       Nontitle   2015       Ah Yeah   
+     9 Nontitle_Ah_Yeah_15.csv 니 식견에 날 맞추지 말길…… Nontitle   2015       Ah Yeah   
+    10 Nontitle_Ah_Yeah_15.csv 막 귀들 방구석 박혀 밖에 나오질 … Nontitle   2015       Ah Yeah   
     # ℹ 1,572 more rows
 
 ## Cleaning up the Data
@@ -100,23 +106,23 @@ use, which divided the individual words of the lyrics by language.
 ``` r
 #putting each word of the lyrics as its own row and feeding it back into the dataframe
 lyrics |> 
-  unnest_tokens(word, "Lyrics") |> arrange(desc(album_year_20XX)) -> lyrics
+  unnest_tokens(word, "lyrics") |> arrange(desc(album_year)) -> lyrics
 print(lyrics)
 ```
 
     # A tibble: 6,418 × 5
-       file                  track_type album_year_20XX song_title word    
-       <chr>                 <chr>      <chr>           <chr>      <chr>   
-     1 Nontitle_Candy_24.csv Nontitle   24              Candy      우리    
-     2 Nontitle_Candy_24.csv Nontitle   24              Candy      사탕    
-     3 Nontitle_Candy_24.csv Nontitle   24              Candy      같은    
-     4 Nontitle_Candy_24.csv Nontitle   24              Candy      사랑해요
-     5 Nontitle_Candy_24.csv Nontitle   24              Candy      자그만  
-     6 Nontitle_Candy_24.csv Nontitle   24              Candy      말      
-     7 Nontitle_Candy_24.csv Nontitle   24              Candy      하나에도
-     8 Nontitle_Candy_24.csv Nontitle   24              Candy      기분이  
-     9 Nontitle_Candy_24.csv Nontitle   24              Candy      좋아질  
-    10 Nontitle_Candy_24.csv Nontitle   24              Candy      수      
+       file                  track_type album_year song_title word    
+       <chr>                 <chr>      <chr>      <chr>      <chr>   
+     1 Nontitle_Candy_24.csv Nontitle   2024       Candy      우리    
+     2 Nontitle_Candy_24.csv Nontitle   2024       Candy      사탕    
+     3 Nontitle_Candy_24.csv Nontitle   2024       Candy      같은    
+     4 Nontitle_Candy_24.csv Nontitle   2024       Candy      사랑해요
+     5 Nontitle_Candy_24.csv Nontitle   2024       Candy      자그만  
+     6 Nontitle_Candy_24.csv Nontitle   2024       Candy      말      
+     7 Nontitle_Candy_24.csv Nontitle   2024       Candy      하나에도
+     8 Nontitle_Candy_24.csv Nontitle   2024       Candy      기분이  
+     9 Nontitle_Candy_24.csv Nontitle   2024       Candy      좋아질  
+    10 Nontitle_Candy_24.csv Nontitle   2024       Candy      수      
     # ℹ 6,408 more rows
 
 ``` r
@@ -133,21 +139,67 @@ lyricdf <- lyrics |>
 ```
 
     # A tibble: 6,418 × 6
-       file                  track_type album_year_20XX song_title word     language
-       <chr>                 <chr>      <chr>           <chr>      <chr>    <chr>   
-     1 Nontitle_Candy_24.csv Nontitle   24              Candy      우리     Korean  
-     2 Nontitle_Candy_24.csv Nontitle   24              Candy      사탕     Korean  
-     3 Nontitle_Candy_24.csv Nontitle   24              Candy      같은     Korean  
-     4 Nontitle_Candy_24.csv Nontitle   24              Candy      사랑해요 Korean  
-     5 Nontitle_Candy_24.csv Nontitle   24              Candy      자그만   Korean  
-     6 Nontitle_Candy_24.csv Nontitle   24              Candy      말       Korean  
-     7 Nontitle_Candy_24.csv Nontitle   24              Candy      하나에도 Korean  
-     8 Nontitle_Candy_24.csv Nontitle   24              Candy      기분이   Korean  
-     9 Nontitle_Candy_24.csv Nontitle   24              Candy      좋아질   Korean  
-    10 Nontitle_Candy_24.csv Nontitle   24              Candy      수       Korean  
+       file                  track_type album_year song_title word     language
+       <chr>                 <chr>      <chr>      <chr>      <chr>    <chr>   
+     1 Nontitle_Candy_24.csv Nontitle   2024       Candy      우리     Korean  
+     2 Nontitle_Candy_24.csv Nontitle   2024       Candy      사탕     Korean  
+     3 Nontitle_Candy_24.csv Nontitle   2024       Candy      같은     Korean  
+     4 Nontitle_Candy_24.csv Nontitle   2024       Candy      사랑해요 Korean  
+     5 Nontitle_Candy_24.csv Nontitle   2024       Candy      자그만   Korean  
+     6 Nontitle_Candy_24.csv Nontitle   2024       Candy      말       Korean  
+     7 Nontitle_Candy_24.csv Nontitle   2024       Candy      하나에도 Korean  
+     8 Nontitle_Candy_24.csv Nontitle   2024       Candy      기분이   Korean  
+     9 Nontitle_Candy_24.csv Nontitle   2024       Candy      좋아질   Korean  
+    10 Nontitle_Candy_24.csv Nontitle   2024       Candy      수       Korean  
     # ℹ 6,408 more rows
 
 ## Analyzing the Data
+
+``` r
+#code meant to count the language breakdown of the lyrics overall
+lyricsdf |> count(language, sort=TRUE)
+```
+
+    # A tibble: 3 × 2
+      language     n
+      <chr>    <int>
+    1 Korean    3621
+    2 English   2508
+    3 <NA>       289
+
+``` r
+#...and visualize it:
+ggplot(lyricsdf, aes(x = language)) +
+  geom_bar()
+```
+
+![](data_processing_files/figure-commonmark/unnamed-chunk-3-1.png)
+
+``` r
+#code meant to count the language breakdown of lyrics by album
+
+
+#...and visualize it:
+ggplot(lyricsdf, aes(x = language, fill = album_year)) +
+  geom_bar()
+```
+
+![](data_processing_files/figure-commonmark/unnamed-chunk-3-2.png)
+
+``` r
+ggplot(lyricsdf, aes(x = album_year, fill = language)) +
+  geom_bar(position = "fill")
+```
+
+![](data_processing_files/figure-commonmark/unnamed-chunk-3-3.png)
+
+``` r
+#...by title versus non-title track
+ggplot(lyricsdf, aes(x = track_type, fill = language)) +
+  geom_bar(position = "fill")
+```
+
+![](data_processing_files/figure-commonmark/unnamed-chunk-3-4.png)
 
 Session Info
 
@@ -191,5 +243,5 @@ sessionInfo()
     [29] lifecycle_1.0.4    bit_4.6.0          vroom_1.6.5        pkgconfig_2.0.3   
     [33] pillar_1.11.0      gtable_0.3.6       glue_1.8.0         Rcpp_1.1.0        
     [37] xfun_0.52          tidyselect_1.2.1   rstudioapi_0.17.1  knitr_1.50        
-    [41] farver_2.1.2       htmltools_0.5.8.1  SnowballC_0.7.1    rmarkdown_2.30    
-    [45] compiler_4.5.1    
+    [41] farver_2.1.2       htmltools_0.5.8.1  SnowballC_0.7.1    labeling_0.4.3    
+    [45] rmarkdown_2.30     compiler_4.5.1    

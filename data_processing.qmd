@@ -96,7 +96,7 @@ lyricdf <- lyrics |>
 lyricsdf |> count(language, sort=TRUE)
 
 #...and visualize it:
-ggplot(lyricsdf, aes(x = fct_infreq(language))) +
+ggplot(lyricsdf, aes(x = language)) +
   geom_bar()
 
 #code meant to count the language breakdown of lyrics by album
@@ -106,9 +106,11 @@ ggplot(lyricsdf, aes(x = fct_infreq(language))) +
 ggplot(lyricsdf, aes(x = language, fill = album_year)) +
   geom_bar()
 
+ggplot(lyricsdf, aes(x = album_year, fill = language)) +
+  geom_bar(position = "fill")
 
 #...by title versus non-title track
-ggplot(lyricsdf, aes(x = language, fill = track_type)) +
+ggplot(lyricsdf, aes(x = track_type, fill = language)) +
   geom_bar(position = "fill")
 
   
