@@ -25,11 +25,10 @@ library(tidyverse)
 library(dplyr)
 library(stringr)
 library(tidytext)
- library(stringr)
 
-#reading multiple files of data into R
-lyrics <- list.files(pattern=".csv") |>
-  read_csv(id = "file")
+#reading multiple files of data into R and replacing NA's to present as true NA's
+firstfiles <- list.files(pattern=".csv") |>
+  read_csv(id = "file", na = c("", "na", "n/a", "N/A", "NA", "Na"))
 ```
 
     Rows: 1582 Columns: 2
@@ -42,106 +41,113 @@ lyrics <- list.files(pattern=".csv") |>
 
 ``` r
 # Putting each song's metadata in separate columns
-lyrics$track_type = str_extract(lyrics$file, "Title|Nontitle")
-lyrics$album_year_20XX = str_extract(lyrics$file, "15|20|23|24")
-# Can't quite get the song title to work right now
-#lyrics$song_title = str_extract(lyrics$file, "")
-lyrics
+firstfiles$track_type = str_extract(firstfiles$file, "Title|Nontitle")
+firstfiles$album_year_20XX = str_extract(firstfiles$file, "15|20|23|24")
+
+#separating out song name using stringr function + mutate:
+lyrics = firstfiles |>
+  mutate(
+    file = as.character(file),
+  song_title = case_when(
+    str_detect(file, "Nontitle_Ah_Yeah_15.csv") ~ "Ah Yeah",
+    str_detect(file, "Nontitle_April_shower_23.csv") ~ "April Shower",
+    str_detect(file, "Nontitle_Candy_24.csv") ~ "Candy",
+    str_detect(file, "Nontitle_Dust_23.csv") ~ "Dust",
+    str_detect(file, "Nontitle_Eyes_On_You_24.csv") ~ "Eyes On You",
+    str_detect(file, "Nontitle_F_ck_My_Life_23.csv") ~ "F_ck My Life",
+    str_detect(file, "Nontitle_Fearless_20.csv") ~ "Fearless",
+    str_detect(file, "Nontitle_Fire_23.csv") ~ "Fire",
+    str_detect(file, "Nontitle_I_Dont_Understand_But_I_Luv_U_23.csv") ~ "I Don't Understand But I Luv U",
+    str_detect(file, "Nontitle_I_Wish_20.csv") ~ "I Wish",
+    str_detect(file, "Nontitle_Jam_Jam_15.csv") ~ "Jam Jam",
+    str_detect(file, "Nontitle_Kidult_20.csv") ~ "Kidult",
+    str_detect(file, "Nontitle_My_My_20.csv") ~ "My My",
+    str_detect(file, "Nontitle_Rain_24.csv") ~ "Rain",
+    str_detect(file, "Nontitle_Shining_Diamond_15.csv") ~ "Shining Diamond",
+    str_detect(file, "Nontitle_Together_20.csv") ~ "Together",
+    str_detect(file, "Nontitle_Twenty_15.csv") ~ "Twenty",
+    str_detect(file, "Nontitle_Water_24.csv") ~ "Water",
+    str_detect(file, "Title_Adore_U_15.csv") ~ "Adore U",
+    str_detect(file, "Title_Left_and_Right_20.csv") ~ "Left and Right",
+    str_detect(file, "Title_Love_Money_Fame_24.csv") ~ "Love Money Fame",
+    str_detect(file, "Title_One_to_Thirteen_24.csv") ~ "One to Thirteen",
+    str_detect(file, "Title_Super_23.csv") ~ "Super")) ->> lyrics
+
+print(lyrics)
 ```
 
-    # A tibble: 1,582 × 4
-       file                    Lyrics                     track_type album_year_20XX
-       <chr>                   <chr>                      <chr>      <chr>          
-     1 Nontitle_Ah_Yeah_15.csv 아 예 아 예 근데 뭐라구요? Nontitle   15             
-     2 Nontitle_Ah_Yeah_15.csv Yo $. Coup$, Here’s the b… Nontitle   15             
-     3 Nontitle_Ah_Yeah_15.csv 등장과 동시에 들러리들 바닥에서…… Nontitle   15             
-     4 Nontitle_Ah_Yeah_15.csv 침 흘리며 기절 그 위에서 수영해요…… Nontitle   15             
-     5 Nontitle_Ah_Yeah_15.csv WOAH 옆구리 지방튜브 끼고 못 뜬…… Nontitle   15             
-     6 Nontitle_Ah_Yeah_15.csv 애들이 알리 있나           Nontitle   15             
-     7 Nontitle_Ah_Yeah_15.csv 못 뜬 이유 절대 모름 (Don’t know)… Nontitle   15             
-     8 Nontitle_Ah_Yeah_15.csv 맞출 생각 없어             Nontitle   15             
-     9 Nontitle_Ah_Yeah_15.csv 니 식견에 날 맞추지 말길   Nontitle   15             
-    10 Nontitle_Ah_Yeah_15.csv 막 귀들 방구석 박혀 밖에 나오질 않지…… Nontitle   15             
+    # A tibble: 1,582 × 5
+       file                    Lyrics          track_type album_year_20XX song_title
+       <chr>                   <chr>           <chr>      <chr>           <chr>     
+     1 Nontitle_Ah_Yeah_15.csv 아 예 아 예 근데 뭐라구… Nontitle   15              Ah Yeah   
+     2 Nontitle_Ah_Yeah_15.csv Yo $. Coup$, H… Nontitle   15              Ah Yeah   
+     3 Nontitle_Ah_Yeah_15.csv 등장과 동시에 들러리들 바… Nontitle   15              Ah Yeah   
+     4 Nontitle_Ah_Yeah_15.csv 침 흘리며 기절 그 위에서… Nontitle   15              Ah Yeah   
+     5 Nontitle_Ah_Yeah_15.csv WOAH 옆구리 지방튜브 … Nontitle   15              Ah Yeah   
+     6 Nontitle_Ah_Yeah_15.csv 애들이 알리 있나…… Nontitle   15              Ah Yeah   
+     7 Nontitle_Ah_Yeah_15.csv 못 뜬 이유 절대 모름 (… Nontitle   15              Ah Yeah   
+     8 Nontitle_Ah_Yeah_15.csv 맞출 생각 없어  Nontitle   15              Ah Yeah   
+     9 Nontitle_Ah_Yeah_15.csv 니 식견에 날 맞추지 말길… Nontitle   15              Ah Yeah   
+    10 Nontitle_Ah_Yeah_15.csv 막 귀들 방구석 박혀 밖에… Nontitle   15              Ah Yeah   
     # ℹ 1,572 more rows
 
 ## Cleaning up the Data
 
 I used functions from tidy text to make it so that each word is its own
-row.
+row. I used stringr functions to detect Hangul use versus Latin alphabet
+use, which divided the individual words of the lyrics by language.
 
 ``` r
-lyrics |>
- unnest_tokens(word, "Lyrics") |> arrange(desc(album_year_20XX)) -> withlang
-print(withlang)
+#putting each word of the lyrics as its own row and feeding it back into the dataframe
+lyrics |> 
+  unnest_tokens(word, "Lyrics") |> arrange(desc(album_year_20XX)) -> lyrics
+print(lyrics)
 ```
 
-    # A tibble: 6,707 × 4
-       file                  track_type album_year_20XX word    
-       <chr>                 <chr>      <chr>           <chr>   
-     1 Nontitle_Candy_24.csv Nontitle   24              우리    
-     2 Nontitle_Candy_24.csv Nontitle   24              사탕    
-     3 Nontitle_Candy_24.csv Nontitle   24              같은    
-     4 Nontitle_Candy_24.csv Nontitle   24              사랑해요
-     5 Nontitle_Candy_24.csv Nontitle   24              자그만  
-     6 Nontitle_Candy_24.csv Nontitle   24              말      
-     7 Nontitle_Candy_24.csv Nontitle   24              하나에도
-     8 Nontitle_Candy_24.csv Nontitle   24              기분이  
-     9 Nontitle_Candy_24.csv Nontitle   24              좋아질  
-    10 Nontitle_Candy_24.csv Nontitle   24              수      
-    # ℹ 6,697 more rows
+    # A tibble: 6,418 × 5
+       file                  track_type album_year_20XX song_title word    
+       <chr>                 <chr>      <chr>           <chr>      <chr>   
+     1 Nontitle_Candy_24.csv Nontitle   24              Candy      우리    
+     2 Nontitle_Candy_24.csv Nontitle   24              Candy      사탕    
+     3 Nontitle_Candy_24.csv Nontitle   24              Candy      같은    
+     4 Nontitle_Candy_24.csv Nontitle   24              Candy      사랑해요
+     5 Nontitle_Candy_24.csv Nontitle   24              Candy      자그만  
+     6 Nontitle_Candy_24.csv Nontitle   24              Candy      말      
+     7 Nontitle_Candy_24.csv Nontitle   24              Candy      하나에도
+     8 Nontitle_Candy_24.csv Nontitle   24              Candy      기분이  
+     9 Nontitle_Candy_24.csv Nontitle   24              Candy      좋아질  
+    10 Nontitle_Candy_24.csv Nontitle   24              Candy      수      
+    # ℹ 6,408 more rows
 
 ``` r
-#creating vector with only the lyrics in single-word rows
-select(withlang, "word") -> withlang
-print(withlang)
-```
-
-    # A tibble: 6,707 × 1
-       word    
-       <chr>   
-     1 우리    
-     2 사탕    
-     3 같은    
-     4 사랑해요
-     5 자그만  
-     6 말      
-     7 하나에도
-     8 기분이  
-     9 좋아질  
-    10 수      
-    # ℹ 6,697 more rows
-
-``` r
-#mutating withlang to detect language of rows of lyrics
-withlang <- withlang %>%
+#mutating dataframe to detect language of rows of lyrics and create language column
+lyricdf <- lyrics |>
   mutate(
     word   = as.character(word),
-    korean  = str_detect(word, "[가-힣]"),
-    english = str_detect(word, "[A-Za-z]")
-  )
-
-print(withlang)
+  language = case_when(
+  str_detect(word, "[가-힣]") ~ "Korean",
+  str_detect(word, "[a-zA-z 12345]") ~ "English"
+)) ->> lyricsdf
+  
+  print(lyricsdf)
 ```
 
-    # A tibble: 6,707 × 3
-       word     korean english
-       <chr>    <lgl>  <lgl>  
-     1 우리     TRUE   FALSE  
-     2 사탕     TRUE   FALSE  
-     3 같은     TRUE   FALSE  
-     4 사랑해요 TRUE   FALSE  
-     5 자그만   TRUE   FALSE  
-     6 말       TRUE   FALSE  
-     7 하나에도 TRUE   FALSE  
-     8 기분이   TRUE   FALSE  
-     9 좋아질   TRUE   FALSE  
-    10 수       TRUE   FALSE  
-    # ℹ 6,697 more rows
+    # A tibble: 6,418 × 6
+       file                  track_type album_year_20XX song_title word     language
+       <chr>                 <chr>      <chr>           <chr>      <chr>    <chr>   
+     1 Nontitle_Candy_24.csv Nontitle   24              Candy      우리     Korean  
+     2 Nontitle_Candy_24.csv Nontitle   24              Candy      사탕     Korean  
+     3 Nontitle_Candy_24.csv Nontitle   24              Candy      같은     Korean  
+     4 Nontitle_Candy_24.csv Nontitle   24              Candy      사랑해요 Korean  
+     5 Nontitle_Candy_24.csv Nontitle   24              Candy      자그만   Korean  
+     6 Nontitle_Candy_24.csv Nontitle   24              Candy      말       Korean  
+     7 Nontitle_Candy_24.csv Nontitle   24              Candy      하나에도 Korean  
+     8 Nontitle_Candy_24.csv Nontitle   24              Candy      기분이   Korean  
+     9 Nontitle_Candy_24.csv Nontitle   24              Candy      좋아질   Korean  
+    10 Nontitle_Candy_24.csv Nontitle   24              Candy      수       Korean  
+    # ℹ 6,408 more rows
 
 ## Analyzing the Data
-
-I will use language-detecting functions to label the individual words as
-English, Korean, or Other.
 
 Session Info
 
