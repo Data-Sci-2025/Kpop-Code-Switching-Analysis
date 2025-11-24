@@ -19,8 +19,8 @@ firstfiles <- list.files(pattern=".csv") |>
 
 # Putting each song's metadata in separate columns
 firstfiles$track_type = str_extract(firstfiles$file, "Title|Nontitle")
-firstfiles$album_year_20XX = str_extract(firstfiles$file, "15|20|23|24")
-
+firstfiles$album_year = str_extract(firstfiles$file, "15|20|23|24")
+ colnames(firstfiles) <- tolower(colnames(firstfiles))
 #separating out song name using stringr function + mutate:
 lyrics = firstfiles |>
   mutate(
@@ -48,7 +48,13 @@ lyrics = firstfiles |>
     str_detect(file, "Title_Left_and_Right_20.csv") ~ "Left and Right",
     str_detect(file, "Title_Love_Money_Fame_24.csv") ~ "Love Money Fame",
     str_detect(file, "Title_One_to_Thirteen_24.csv") ~ "One to Thirteen",
-    str_detect(file, "Title_Super_23.csv") ~ "Super")) ->> lyrics
+    str_detect(file, "Title_Super_23.csv") ~ "Super"),
+  album_year = case_when(
+    str_detect(album_year, "24") ~ "2024",
+    str_detect(album_year, "23") ~ "2023",
+    str_detect(album_year, "20") ~ "2020",
+    str_detect(album_year, "15") ~ "2015")
+  ) ->> lyrics
 
 print(lyrics)
     
@@ -63,7 +69,7 @@ I used functions from tidy text to make it so that each word is its own row. I u
 ```{r}
 #putting each word of the lyrics as its own row and feeding it back into the dataframe
 lyrics |> 
-  unnest_tokens(word, "Lyrics") |> arrange(desc(album_year_20XX)) -> lyrics
+  unnest_tokens(word, "lyrics") |> arrange(desc(album_year)) -> lyrics
 print(lyrics)
 
 
@@ -86,7 +92,26 @@ lyricdf <- lyrics |>
 
 ```{r}
 
+#code meant to count the language breakdown of the lyrics overall
+lyricsdf |> count(language, sort=TRUE)
 
+#...and visualize it:
+ggplot(lyricsdf, aes(x = fct_infreq(language))) +
+  geom_bar()
+
+#code meant to count the language breakdown of lyrics by album
+
+
+#...and visualize it:
+ggplot(lyricsdf, aes(x = language, fill = album_year)) +
+  geom_bar()
+
+
+#...by title versus non-title track
+ggplot(lyricsdf, aes(x = language, fill = track_type)) +
+  geom_bar(position = "fill")
+
+  
 
 ```
 
