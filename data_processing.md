@@ -97,6 +97,12 @@ print(lyrics)
     10 Nontitle_Ah_Yeah_15.csv 막 귀들 방구석 박혀 밖에 나오질 … Nontitle   2015       Ah Yeah   
     # ℹ 1,572 more rows
 
+``` r
+?remove()
+```
+
+    starting httpd help server ... done
+
 ## Cleaning up the Data
 
 I used functions from tidy text to make it so that each word is its own
@@ -156,7 +162,7 @@ lyricdf <- lyrics |>
 ## Analyzing the Data
 
 ``` r
-#code meant to count the language breakdown of the lyrics overall
+#to count the language breakdown of the lyrics overall
 lyricsdf |> count(language, sort=TRUE)
 ```
 
@@ -169,37 +175,143 @@ lyricsdf |> count(language, sort=TRUE)
 
 ``` r
 #...and visualize it:
-ggplot(lyricsdf, aes(x = language)) +
-  geom_bar()
+ggplot(data=subset(lyricsdf, !is.na(language)), aes(x = language)) +
+  geom_bar(fill = "salmon")+ theme_light() + xlab("Language") + ylab("Count") + labs(title = "Overall Language Use")
 ```
 
 ![](data_processing_files/figure-commonmark/unnamed-chunk-3-1.png)
 
 ``` r
+ggsave("Overall Language Use.png")
+```
+
+    Saving 7 x 5 in image
+
+``` r
 #code meant to count the language breakdown of lyrics by album
+table(lyricsdf$album_year, lyricsdf$language)
+```
 
+          
+           English Korean
+      2015     828    980
+      2020     494   1031
+      2023     476    944
+      2024     710    666
 
+``` r
 #...and visualize it:
-ggplot(lyricsdf, aes(x = language, fill = album_year)) +
-  geom_bar()
+ggplot(data=subset(lyricsdf, !is.na(language)), aes(x = language, fill = album_year, na.rm = FALSE)) +
+  geom_bar(position = "dodge") + xlab("Language") + ylab("Lyrics") + labs(fill = "Album Year")  + labs(title = "Language Use for Each Album Year")
 ```
 
 ![](data_processing_files/figure-commonmark/unnamed-chunk-3-2.png)
 
 ``` r
-ggplot(lyricsdf, aes(x = album_year, fill = language)) +
-  geom_bar(position = "fill")
+ggsave("Language Use for Each Album Year.png")
+```
+
+    Saving 7 x 5 in image
+
+``` r
+ggplot(data=subset(lyricsdf, !is.na(language)), aes(x = album_year, fill = language)) +
+  geom_bar(position = "dodge") + xlab("Album Year") + ylab("Lyrics") + labs(fill = "Language") + labs(title = "Language Comparison by Album Year")
 ```
 
 ![](data_processing_files/figure-commonmark/unnamed-chunk-3-3.png)
 
 ``` r
-#...by title versus non-title track
-ggplot(lyricsdf, aes(x = track_type, fill = language)) +
-  geom_bar(position = "fill")
+ggsave("Language Comparison by Album Year.png")
+```
+
+    Saving 7 x 5 in image
+
+``` r
+#...by song:
+ggplot(data=subset(lyricsdf, !is.na(language)), aes(y = song_title, fill = language)) +
+  geom_bar(position = "fill") + xlab("Lyrics") + ylab("Song") + labs(fill = "Language") + labs(title = "Language Use by Song")
 ```
 
 ![](data_processing_files/figure-commonmark/unnamed-chunk-3-4.png)
+
+``` r
+ggsave("Language Use by Song.png")
+```
+
+    Saving 7 x 5 in image
+
+``` r
+#...by title versus non-title track
+ggplot(data=subset(lyricsdf, !is.na(language)), aes(x = track_type, fill = language)) +
+  geom_bar(position = "fill") + xlab("Track Type") + ylab("Lyrics") + labs(fill ="Language") + labs(title = "Language Use by Nontitle vs. Title Tracks")
+```
+
+![](data_processing_files/figure-commonmark/unnamed-chunk-3-5.png)
+
+``` r
+ggsave("Language Use by Nontitle vs. Title Tracks.png")
+```
+
+    Saving 7 x 5 in image
+
+``` r
+#sorting songs into albums:
+filter(lyricsdf, album_year == "2024") ->> byalbum24
+filter(lyricsdf, album_year == "2023") ->> byalbum23
+filter(lyricsdf, album_year == "2020") ->> byalbum20
+filter(lyricsdf, album_year == "2015") ->> byalbum15
+
+#visualizing language use by album and song using objects from above ^: 
+ggplot(data=subset(byalbum15, !is.na(language)), aes(y = song_title, fill = language)) +
+  geom_bar(position = "fill") + xlab("Lyrics") + ylab("Songs") + labs(title= "Language Use for Debut (2015) Album")
+```
+
+![](data_processing_files/figure-commonmark/unnamed-chunk-3-6.png)
+
+``` r
+ggsave("Language Use for Debut.png")
+```
+
+    Saving 7 x 5 in image
+
+``` r
+ggplot(data=subset(byalbum20, !is.na(language)), aes(y = song_title, fill = language)) +
+  geom_bar(position = "fill") + xlab("Lyrics") + ylab("Songs") + labs(title= "Language Use for Mid-Career (2020) Album")
+```
+
+![](data_processing_files/figure-commonmark/unnamed-chunk-3-7.png)
+
+``` r
+ggsave("Language Use for Mid-Career.png")
+```
+
+    Saving 7 x 5 in image
+
+``` r
+ggplot(data=subset(byalbum23, !is.na(language)), aes(y = song_title, fill = language)) +
+  geom_bar(position = "fill") + xlab("Lyrics") + ylab("Songs") + labs(title= "Language Use for Best-selling (2023) Album")
+```
+
+![](data_processing_files/figure-commonmark/unnamed-chunk-3-8.png)
+
+``` r
+ggsave("Language Use for Best-selling.png")
+```
+
+    Saving 7 x 5 in image
+
+``` r
+ggplot(data=subset(byalbum24, !is.na(language)), aes(y = song_title, fill = language)) +
+  geom_bar(position = "fill") + xlab("Lyrics") + ylab("Songs") + labs(title= "Language Use for Latest (2024) Album")
+```
+
+![](data_processing_files/figure-commonmark/unnamed-chunk-3-9.png)
+
+``` r
+ggsave("Language Use for Latest.png")
+```
+
+    Saving 7 x 5 in image
 
 Session Info
 
@@ -237,11 +349,12 @@ sessionInfo()
      [5] lattice_0.22-7     hms_1.1.3          digest_0.6.37      magrittr_2.0.3    
      [9] evaluate_1.0.5     grid_4.5.1         timechange_0.3.0   RColorBrewer_1.1-3
     [13] fastmap_1.2.0      jsonlite_2.0.0     Matrix_1.7-3       scales_1.4.0      
-    [17] cli_3.6.5          rlang_1.1.6        crayon_1.5.3       tokenizers_0.3.0  
-    [21] bit64_4.6.0-1      withr_3.0.2        yaml_2.3.10        tools_4.5.1       
-    [25] parallel_4.5.1     tzdb_0.5.0         vctrs_0.6.5        R6_2.6.1          
-    [29] lifecycle_1.0.4    bit_4.6.0          vroom_1.6.5        pkgconfig_2.0.3   
-    [33] pillar_1.11.0      gtable_0.3.6       glue_1.8.0         Rcpp_1.1.0        
-    [37] xfun_0.52          tidyselect_1.2.1   rstudioapi_0.17.1  knitr_1.50        
-    [41] farver_2.1.2       htmltools_0.5.8.1  SnowballC_0.7.1    labeling_0.4.3    
-    [45] rmarkdown_2.30     compiler_4.5.1    
+    [17] textshaping_1.0.1  cli_3.6.5          rlang_1.1.6        crayon_1.5.3      
+    [21] tokenizers_0.3.0   bit64_4.6.0-1      withr_3.0.2        yaml_2.3.10       
+    [25] tools_4.5.1        parallel_4.5.1     tzdb_0.5.0         vctrs_0.6.5       
+    [29] R6_2.6.1           lifecycle_1.0.4    bit_4.6.0          vroom_1.6.5       
+    [33] ragg_1.4.0         pkgconfig_2.0.3    pillar_1.11.0      gtable_0.3.6      
+    [37] glue_1.8.0         Rcpp_1.1.0         systemfonts_1.2.3  xfun_0.52         
+    [41] tidyselect_1.2.1   rstudioapi_0.17.1  knitr_1.50         farver_2.1.2      
+    [45] htmltools_0.5.8.1  SnowballC_0.7.1    labeling_0.4.3     rmarkdown_2.30    
+    [49] compiler_4.5.1    

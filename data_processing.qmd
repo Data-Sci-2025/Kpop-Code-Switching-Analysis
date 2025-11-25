@@ -58,6 +58,7 @@ lyrics = firstfiles |>
 
 print(lyrics)
     
+?remove()
 
 ```
 
@@ -88,30 +89,64 @@ lyricdf <- lyrics |>
 
 
 
-## Analyzing the Data
+## Analyzing the Data 
 
 ```{r}
 
-#code meant to count the language breakdown of the lyrics overall
+#to count the language breakdown of the lyrics overall
 lyricsdf |> count(language, sort=TRUE)
 
 #...and visualize it:
-ggplot(lyricsdf, aes(x = language)) +
-  geom_bar()
+ggplot(data=subset(lyricsdf, !is.na(language)), aes(x = language)) +
+  geom_bar(fill = "salmon")+ theme_light() + xlab("Language") + ylab("Count") + labs(title = "Overall Language Use")
+ggsave("Overall Language Use.png")
 
 #code meant to count the language breakdown of lyrics by album
-
+table(lyricsdf$album_year, lyricsdf$language)
 
 #...and visualize it:
-ggplot(lyricsdf, aes(x = language, fill = album_year)) +
-  geom_bar()
+ggplot(data=subset(lyricsdf, !is.na(language)), aes(x = language, fill = album_year, na.rm = FALSE)) +
+  geom_bar(position = "dodge") + xlab("Language") + ylab("Lyrics") + labs(fill = "Album Year")  + labs(title = "Language Use for Each Album Year")
+ggsave("Language Use for Each Album Year.png")
 
-ggplot(lyricsdf, aes(x = album_year, fill = language)) +
-  geom_bar(position = "fill")
+ggplot(data=subset(lyricsdf, !is.na(language)), aes(x = album_year, fill = language)) +
+  geom_bar(position = "dodge") + xlab("Album Year") + ylab("Lyrics") + labs(fill = "Language") + labs(title = "Language Comparison by Album Year")
+ggsave("Language Comparison by Album Year.png")
+
+#...by song:
+ggplot(data=subset(lyricsdf, !is.na(language)), aes(y = song_title, fill = language)) +
+  geom_bar(position = "fill") + xlab("Lyrics") + ylab("Song") + labs(fill = "Language") + labs(title = "Language Use by Song")
+ggsave("Language Use by Song.png")
+
 
 #...by title versus non-title track
-ggplot(lyricsdf, aes(x = track_type, fill = language)) +
-  geom_bar(position = "fill")
+ggplot(data=subset(lyricsdf, !is.na(language)), aes(x = track_type, fill = language)) +
+  geom_bar(position = "fill") + xlab("Track Type") + ylab("Lyrics") + labs(fill ="Language") + labs(title = "Language Use by Nontitle vs. Title Tracks")
+ggsave("Language Use by Nontitle vs. Title Tracks.png")
+
+#sorting songs into albums:
+filter(lyricsdf, album_year == "2024") ->> byalbum24
+filter(lyricsdf, album_year == "2023") ->> byalbum23
+filter(lyricsdf, album_year == "2020") ->> byalbum20
+filter(lyricsdf, album_year == "2015") ->> byalbum15
+
+#visualizing language use by album and song using objects from above ^: 
+ggplot(data=subset(byalbum15, !is.na(language)), aes(y = song_title, fill = language)) +
+  geom_bar(position = "fill") + xlab("Lyrics") + ylab("Songs") + labs(title= "Language Use for Debut (2015) Album")
+ggsave("Language Use for Debut.png")
+
+ggplot(data=subset(byalbum20, !is.na(language)), aes(y = song_title, fill = language)) +
+  geom_bar(position = "fill") + xlab("Lyrics") + ylab("Songs") + labs(title= "Language Use for Mid-Career (2020) Album")
+ggsave("Language Use for Mid-Career.png")
+
+ggplot(data=subset(byalbum23, !is.na(language)), aes(y = song_title, fill = language)) +
+  geom_bar(position = "fill") + xlab("Lyrics") + ylab("Songs") + labs(title= "Language Use for Best-selling (2023) Album")
+ggsave("Language Use for Best-selling.png")
+
+ggplot(data=subset(byalbum24, !is.na(language)), aes(y = song_title, fill = language)) +
+  geom_bar(position = "fill") + xlab("Lyrics") + ylab("Songs") + labs(title= "Language Use for Latest (2024) Album")
+ggsave("Language Use for Latest.png")
+
 
   
 
