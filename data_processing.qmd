@@ -56,9 +56,8 @@ lyrics = firstfiles |>
     str_detect(album_year, "15") ~ "2015")
   ) ->> lyrics
 
-print(lyrics)
+lyrics
     
-?remove()
 
 ```
 

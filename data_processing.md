@@ -79,7 +79,7 @@ lyrics = firstfiles |>
     str_detect(album_year, "15") ~ "2015")
   ) ->> lyrics
 
-print(lyrics)
+lyrics
 ```
 
     # A tibble: 1,582 × 5
@@ -96,12 +96,6 @@ print(lyrics)
      9 Nontitle_Ah_Yeah_15.csv 니 식견에 날 맞추지 말길…… Nontitle   2015       Ah Yeah   
     10 Nontitle_Ah_Yeah_15.csv 막 귀들 방구석 박혀 밖에 나오질 … Nontitle   2015       Ah Yeah   
     # ℹ 1,572 more rows
-
-``` r
-?remove()
-```
-
-    starting httpd help server ... done
 
 ## Cleaning up the Data
 
